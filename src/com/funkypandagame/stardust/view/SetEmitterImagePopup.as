@@ -33,6 +33,8 @@ public class SetEmitterImagePopup extends Panel
 
     private var _onClose:Function;  // function(frameWidth:int, frameHeight:int):void
     private var _originalBD:BitmapData;
+    private var _pendingBD:BitmapData;
+    private var _pendingOnClose:Function;
     private var _previews:Vector.<BitmapData>;
     private var _previewTexture:Texture;
     private var _cnt:uint;
@@ -89,10 +91,23 @@ public class SetEmitterImagePopup extends Panel
         addChild(doneBtn);
 
         _timer.addEventListener(TimerEvent.TIMER, _onTimer);
+
+        if (_pendingBD != null)
+        {
+            setImageSlices(_pendingBD, _pendingOnClose);
+            _pendingBD = null;
+            _pendingOnClose = null;
+        }
     }
 
     public function setImageSlices(bitmapData:BitmapData, onClose:Function):void
     {
+        if (_widthStepper == null)
+        {
+            _pendingBD = bitmapData;
+            _pendingOnClose = onClose;
+            return;
+        }
         _onClose = onClose;
         _originalBD = bitmapData;
         _previews = new <BitmapData>[bitmapData];

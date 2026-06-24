@@ -3,16 +3,23 @@ package com.funkypandagame.stardust.view
 
 import feathers.controls.Button;
 import feathers.controls.Check;
+import feathers.controls.ImageLoader;
 import feathers.controls.Label;
 import feathers.controls.LayoutGroup;
 import feathers.controls.NumericStepper;
 import feathers.controls.PickerList;
+import feathers.controls.ScrollContainer;
+import feathers.controls.ScrollBarDisplayMode;
+import feathers.controls.ScrollInteractionMode;
+import feathers.controls.ScrollPolicy;
+import feathers.layout.Direction;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.HorizontalLayoutData;
 import feathers.layout.VerticalAlign;
 import feathers.layout.VerticalLayout;
 
 import com.funkypandagame.stardust.helpers.Globals;
+import com.funkypandagame.stardust.view.StardusttoolMainView;
 import com.funkypandagame.stardust.view.events.LoadEmitterImageFromFileEvent;
 import com.funkypandagame.stardust.controller.events.StartSimEvent;
 
@@ -21,7 +28,10 @@ import idv.cjcat.stardustextended.handlers.starling.StarlingHandler;
 import flash.display.BitmapData;
 import flash.events.EventDispatcher;
 
+import starling.display.Quad;
 import starling.events.Event;
+import starling.textures.Texture;
+import starling.utils.Color;
 
 public class ParticleHandlerContainer extends LayoutGroup
 {
@@ -31,6 +41,8 @@ public class ParticleHandlerContainer extends LayoutGroup
     private var _animSpeedStepper:NumericStepper;
     private var _randomFrameCheck:Check;
     private var _spriteSheetRow:LayoutGroup;
+    private var _imageStrip:ScrollContainer;
+    private var _stripTextures:Vector.<Texture> = new <Texture>[];
     private var _handler:StarlingHandler;
     private var _settingHandler:Boolean = false;
 
@@ -43,6 +55,8 @@ public class ParticleHandlerContainer extends LayoutGroup
         v.gap = 2; v.paddingLeft = 4; v.paddingRight = 4;
         v.paddingTop = 4; v.paddingBottom = 4;
         layout = v;
+        var skin:Quad = new Quad(50,50,Color.TEAL);
+        backgroundSkin = skin;
     }
 
     override protected function initialize():void
@@ -95,6 +109,21 @@ public class ParticleHandlerContainer extends LayoutGroup
         _randomFrameCheck = new Check(); _randomFrameCheck.label = "start at random frame?";
         _randomFrameCheck.addEventListener(Event.CHANGE, _onPropsChange);
         _spriteSheetRow.addChild(_randomFrameCheck);
+
+        _imageStrip = new ScrollContainer();
+        var imgLayout:HorizontalLayout = new HorizontalLayout();
+        imgLayout.gap = 2;
+        _imageStrip.layout = imgLayout;
+        _imageStrip.verticalScrollPolicy = ScrollPolicy.OFF;
+        _imageStrip.scrollBarDisplayMode = ScrollBarDisplayMode.NONE;
+        _imageStrip.interactionMode = ScrollInteractionMode.TOUCH;
+        _imageStrip.verticalMouseWheelScrollDirection = Direction.HORIZONTAL;
+        _imageStrip.maxWidth = StardusttoolMainView.LEFT_COLUMN_WIDTH;
+        _imageStrip.height = 35;
+        _imageStrip.layoutData = new HorizontalLayoutData(100);
+        _imageStrip.visible = false;
+        _imageStrip.includeInLayout = false;
+        addChild(_imageStrip);
     }
 
     private function _hrow():LayoutGroup
@@ -120,6 +149,28 @@ public class ParticleHandlerContainer extends LayoutGroup
         _spriteSheetRow.visible = handler.isSpriteSheet;
         _spriteSheetRow.includeInLayout = handler.isSpriteSheet;
         _settingHandler = false;
+
+        for each (var old:Texture in _stripTextures) old.dispose();
+        _stripTextures.length = 0;
+        _imageStrip.removeChildren();
+
+        var hasImages:Boolean = handlerImages != null && handlerImages.length > 0;
+        _imageStrip.visible = hasImages;
+        _imageStrip.includeInLayout = hasImages;
+        if (hasImages)
+        {
+            for each (var bd:BitmapData in handlerImages)
+            {
+                var tex:Texture = Texture.fromBitmapData(bd);
+                _stripTextures.push(tex);
+                var img:ImageLoader = new ImageLoader();
+                img.source = tex;
+                img.width = 35;
+                img.height = 35;
+                img.maintainAspectRatio = true;
+                _imageStrip.addChild(img);
+            }
+        }
     }
 
     private function _onPropsChange(e:Event):void
