@@ -39,7 +39,9 @@ import flash.events.EventDispatcher;
 import flash.utils.ByteArray;
 
 import starling.core.Starling;
+import starling.display.Quad;
 import starling.events.Event;
+import starling.utils.Color;
 
 public class StardusttoolMainView extends LayoutGroup
 {
@@ -60,6 +62,7 @@ public class StardusttoolMainView extends LayoutGroup
     private var _bus:EventDispatcher;
     private var _mainLoop:MainEnterFrameLoopService;
     private var _examplesPopup:ExamplesPopup;
+    private var _canvasMask:Quad;
 
     public function StardusttoolMainView(bus:EventDispatcher, overlay:Sprite)
     {
@@ -67,6 +70,8 @@ public class StardusttoolMainView extends LayoutGroup
         _bus = bus;
         _previewOverlay = overlay;
         layout = new AnchorLayout();
+        /*var skin:Quad = new Quad(50,50,Color.BLACK);
+        backgroundSkin = skin;*/
     }
 
     override protected function initialize():void
@@ -224,10 +229,23 @@ public class StardusttoolMainView extends LayoutGroup
             Globals.starlingCanvas.x = LEFT_COLUMN_WIDTH;
             Globals.starlingCanvas.y = 0;
         }
+        var previewW:Number = Starling.current.stage.stageWidth - LEFT_COLUMN_WIDTH;
+        var previewH:Number = Starling.current.stage.stageHeight;
+        if (_canvasMask == null)
+        {
+            _canvasMask = new Quad(previewW, previewH);
+            _canvasMask.x = LEFT_COLUMN_WIDTH;
+            _canvasMask.y = 0;
+            Globals.starlingCanvas.mask = _canvasMask;
+        }
+        else
+        {
+            _canvasMask.width = previewW;
+            _canvasMask.height = previewH;
+        }
         backgroundProvider.setBgImagePosition(
             Globals.starlingCanvas.x, Globals.starlingCanvas.y,
-            Starling.current.stage.stageWidth - LEFT_COLUMN_WIDTH,
-            Starling.current.stage.stageHeight
+            previewW, previewH
         );
         if (_previewOverlay)
         {
