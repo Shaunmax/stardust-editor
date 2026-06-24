@@ -1,0 +1,19 @@
+{
+    "config": "air",
+    "compilerOptions": {
+        "source-path": [
+            "src/main/flex",
+            "src/starling",
+            "src/feathers",
+            "src/themes/MetalWorksDesktopTheme/source"
+        ],
+        "library-path": [
+            "libs/stardust-library.swc",
+            "libs/stardust-sim-loader.swc",
+            "libs/as3-signals-0.8.swc"
+        ],
+        "output": "bin/StardustEditor.swf"
+    },
+    "application": "src/main/air/StardustEditor-app.xml",
+    "mainClass": "com.funkypandagame.stardust.StardustEditor"
+}

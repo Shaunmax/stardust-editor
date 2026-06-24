@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/32.0">
+    <id>com.funkypandagame.stardust.StardustEditor</id>
+    <versionNumber>1.0.0</versionNumber>
+    <filename>StardustEditor</filename>
+    <name>Stardust Editor</name>
+    <initialWindow>
+        <content>StardustEditor.swf</content>
+        <title>Stardust Editor</title>
+        <systemChrome>standard</systemChrome>
+        <transparent>false</transparent>
+        <visible>true</visible>
+        <width>1280</width>
+        <height>800</height>
+        <minSize>1024 700</minSize>
+        <renderMode>direct</renderMode>
+    </initialWindow>
+    <supportedProfiles>extendedDesktop desktop</supportedProfiles>
+</application>
