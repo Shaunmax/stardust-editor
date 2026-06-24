@@ -71,8 +71,10 @@ import feathers.core.PopUpManager;
 import flash.display.Graphics;
 import flash.events.Event;
 import flash.events.EventDispatcher;
+import flash.geom.Rectangle;
 import flash.utils.ByteArray;
 
+import starling.core.Starling;
 import starling.display.Sprite;
 
 public class AppController {
@@ -321,7 +323,10 @@ public class AppController {
 
     private function createUI():void {
         _mainView = new StardusttoolMainView(_bus, _overlay);
+        _mainView.width = Starling.current.stage.stageWidth;
+        _mainView.height = Starling.current.stage.stageHeight;
         _starlingRoot.addChild(_mainView);
+        Starling.current.nativeStage.addEventListener(Event.RESIZE, _onStageResize);
 
         _emittersUIView = _mainView.emittersUIView;
         _backgroundProvider = _mainView.backgroundProvider;
@@ -335,6 +340,19 @@ public class AppController {
 
         _mainView.updateStagePosition();
         loadDefaultSim();
+    }
+
+    private function _onStageResize(e:Event):void {
+        var w:Number = Starling.current.nativeStage.stageWidth;
+        var h:Number = Starling.current.nativeStage.stageHeight;
+        Starling.current.stage.stageWidth = w;
+        Starling.current.stage.stageHeight = h;
+        Starling.current.viewPort = new Rectangle(0, 0, w, h);
+        if (_mainView) {
+            _mainView.width = w;
+            _mainView.height = h;
+            _mainView.updateStagePosition();
+        }
     }
 
     private function loadDefaultSim():void {
