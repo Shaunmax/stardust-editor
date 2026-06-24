@@ -6,7 +6,7 @@ import com.funkypandagame.stardust.helpers.Globals;
 
 import feathers.themes.MetalWorksDesktopTheme;
 
-
+import starling.assets.AssetManager;
 import starling.core.Starling;
 import starling.display.Sprite;
 import flash.display.Sprite;
@@ -14,6 +14,8 @@ import starling.events.Event;
 
 public class AppRoot extends starling.display.Sprite
 {
+    public static var assets:AssetManager;
+
     public function AppRoot()
     {
         addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
@@ -23,6 +25,13 @@ public class AppRoot extends starling.display.Sprite
     {
         removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
+        assets = new AssetManager();
+        assets.enqueue(["assets/pngs/background.png"]);
+        assets.loadQueue(onAssetsComplete, onAssetsError, onAssetsProgress);
+    }
+
+    private function onAssetsComplete():void
+    {
         new MetalWorksDesktopTheme();
 
         Globals.init();
@@ -41,6 +50,16 @@ public class AppRoot extends starling.display.Sprite
 
         var controller:AppController = new AppController(this, overlay);
         controller.start();
+    }
+
+    private function onAssetsError(error:String):void
+    {
+        trace("AssetManager error: " + error);
+    }
+
+    private function onAssetsProgress(ratio:Number):void
+    {
+        trace("AssetManager loading: " + int(ratio * 100) + "%");
     }
 }
 }
