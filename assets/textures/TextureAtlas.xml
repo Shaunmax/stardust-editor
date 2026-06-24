@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:757ebe86cb944f80897e8fa1a43e490d:41cb946a82ee7941d0965740307cfe8c:a1bbeb4bbf5472f6df68a9071c2df3f2$ -->
+<TextureAtlas imagePath="TextureAtlas.png" width="84" height="42">
+    <SubTexture name="background" x="1" y="1" width="40" height="40"/>
+    <SubTexture name="item_background" x="43" y="1" width="40" height="40"/>
+</TextureAtlas>

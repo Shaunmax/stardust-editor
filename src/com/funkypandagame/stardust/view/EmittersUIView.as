@@ -19,8 +19,13 @@ import com.funkypandagame.stardust.controller.events.SnapshotEvent;
 import com.funkypandagame.stardustplayer.emitter.EmitterValueObject;
 
 import flash.events.EventDispatcher;
+import flash.geom.Rectangle;
+
+import starling.display.Image;
+import starling.display.Quad;
 
 import starling.events.Event;
+import starling.utils.Color;
 
 public class EmittersUIView extends LayoutGroup
 {
@@ -38,6 +43,8 @@ public class EmittersUIView extends LayoutGroup
         var v:VerticalLayout = new VerticalLayout();
         v.gap = 2;
         layout = v;
+        var skin:Quad = new Quad(50,50,Color.TEAL);
+        backgroundSkin = skin;
     }
 
     override protected function initialize():void
@@ -55,7 +62,7 @@ public class EmittersUIView extends LayoutGroup
         fpsRow.addChild(fpsLbl);
 
         _fpsStepper = new NumericStepper();
-        _fpsStepper.minimum = 10; _fpsStepper.maximum = 60; _fpsStepper.step = 1; _fpsStepper.width = 60;
+        _fpsStepper.minimum = 1; _fpsStepper.maximum = 60; _fpsStepper.step = 1; _fpsStepper.width = 60;
         _fpsStepper.addEventListener(Event.CHANGE, _onFPSChange);
         fpsRow.addChild(_fpsStepper);
 

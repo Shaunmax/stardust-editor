@@ -10,7 +10,6 @@ import feathers.controls.ScrollPolicy;
 import feathers.layout.AnchorLayout;
 import feathers.layout.AnchorLayoutData;
 import feathers.layout.HorizontalLayout;
-import feathers.layout.HorizontalLayoutData;
 import feathers.layout.VerticalAlign;
 import feathers.layout.VerticalLayout;
 
@@ -130,6 +129,7 @@ public class StardusttoolMainView extends LayoutGroup
         actionsContainer.onElementRemoved = function(item:StardustElement):void {
             _bus.dispatchEvent(new OnActionACChangeEvent(OnActionACChangeEvent.REMOVE, Action(item)));
         };
+        actionsContainer.width = LEFT_COLUMN_WIDTH;
         leftCol.addChild(actionsContainer);
 
         // Right column

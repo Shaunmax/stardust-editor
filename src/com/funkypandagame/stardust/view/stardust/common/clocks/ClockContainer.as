@@ -12,12 +12,22 @@ import feathers.layout.VerticalLayout;
 
 import com.funkypandagame.stardust.helpers.DropdownListVO;
 
+import feathers.themes.BaseMetalWorksDesktopTheme;
+
+import feathers.themes.MetalWorksDesktopTheme;
+import feathers.themes.MetalWorksDesktopThemeWithAssetManager;
+
 import idv.cjcat.stardustextended.clocks.Clock;
 import idv.cjcat.stardustextended.clocks.ImpulseClock;
 import idv.cjcat.stardustextended.clocks.SteadyClock;
 import idv.cjcat.stardustextended.emitters.Emitter;
 
+import starling.display.Image;
+
+import starling.display.Quad;
+
 import starling.events.Event;
+import starling.utils.Color;
 
 public class ClockContainer extends LayoutGroup
 {
@@ -39,6 +49,8 @@ public class ClockContainer extends LayoutGroup
         v.gap = 2; v.paddingLeft = 4; v.paddingRight = 4;
         v.paddingTop = 4; v.paddingBottom = 4;
         layout = v;
+        var skin:Quad = new Quad(50,50,Color.TEAL);
+        backgroundSkin = skin;
     }
 
     override protected function initialize():void

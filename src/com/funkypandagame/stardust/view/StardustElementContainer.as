@@ -8,6 +8,7 @@ import feathers.controls.List;
 import feathers.controls.PickerList;
 import feathers.controls.ScrollContainer;
 import feathers.data.ListCollection;
+import feathers.layout.HorizontalAlign;
 import feathers.layout.HorizontalLayout;
 import feathers.layout.HorizontalLayoutData;
 import feathers.layout.VerticalAlign;
@@ -20,11 +21,16 @@ import idv.cjcat.stardustextended.StardustElement;
 import idv.cjcat.stardustextended.actions.ColorGradient;
 import idv.cjcat.stardustextended.actions.Spawn;
 
+import com.funkypandagame.stardust.AppRoot;
+
 import flash.utils.Dictionary;
 import flash.utils.getDefinitionByName;
 import flash.utils.getQualifiedClassName;
 
+import starling.display.Image;
 import starling.events.Event;
+
+import flash.geom.Rectangle;
 
 public class StardustElementContainer extends LayoutGroup
 {
@@ -49,7 +55,9 @@ public class StardustElementContainer extends LayoutGroup
     {
         super();
         var v:VerticalLayout = new VerticalLayout();
-        v.gap = 0;
+        v.gap = 4;
+        v.paddingLeft = 4; v.paddingRight = 4; v.paddingTop = 4; v.paddingBottom = 4;
+        v.horizontalAlign = HorizontalAlign.JUSTIFY;
         layout = v;
     }
 
@@ -99,9 +107,14 @@ public class StardustElementContainer extends LayoutGroup
         header.addChild(_addBtn);
 
         _renderersGroup = new LayoutGroup();
-        var v:VerticalLayout = new VerticalLayout(); v.gap = 0;
+        var v:VerticalLayout = new VerticalLayout();
+        v.gap = 0;
+        v.horizontalAlign = HorizontalAlign.JUSTIFY;
         _renderersGroup.layout = v;
         _renderersGroup.layoutData = new HorizontalLayoutData(100);
+        var skin:Image = new Image(AppRoot.assets.getTexture("background"));
+        skin.scale9Grid = new Rectangle(12, 12, 16, 16);
+        _renderersGroup.backgroundSkin = skin;
         addChild(_renderersGroup);
 
         if (_fullCollection) _rebuildFilteredCollection();

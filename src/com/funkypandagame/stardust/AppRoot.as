@@ -26,7 +26,7 @@ public class AppRoot extends starling.display.Sprite
         removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 
         assets = new AssetManager();
-        assets.enqueue(["assets/pngs/background.png"]);
+        assets.enqueue(["assets/textures/TextureAtlas.png","assets/textures/TextureAtlas.xml"]);
         assets.loadQueue(onAssetsComplete, onAssetsError, onAssetsProgress);
     }
 

@@ -25,10 +25,12 @@ import idv.cjcat.stardustextended.actions.IZoneContainer;
 import idv.cjcat.stardustextended.zones.Zone;
 
 import starling.core.Starling;
+import starling.display.Quad;
 import starling.events.Event;
 import starling.events.Touch;
 import starling.events.TouchEvent;
 import starling.events.TouchPhase;
+import starling.utils.Color;
 
 public class ZoneContainer extends LayoutGroup
 {
@@ -58,6 +60,9 @@ public class ZoneContainer extends LayoutGroup
         var vLayout:VerticalLayout = new VerticalLayout();
         vLayout.gap = 3;
         this.layout = vLayout;
+
+        var skin:Quad = new Quad(50,50,Color.BLUE);
+        backgroundSkin = skin;
 
         // Header row
         var headerGroup:LayoutGroup = new LayoutGroup();

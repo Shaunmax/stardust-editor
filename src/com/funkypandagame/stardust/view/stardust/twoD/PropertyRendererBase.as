@@ -11,6 +11,11 @@ import feathers.layout.HorizontalLayout;
 import feathers.layout.HorizontalLayoutData;
 import feathers.layout.VerticalAlign;
 
+import com.funkypandagame.stardust.AppRoot;
+
+import flash.geom.Rectangle;
+
+import starling.display.Image;
 import starling.events.Event;
 
 public class PropertyRendererBase extends LayoutGroupListItemRenderer
@@ -27,6 +32,10 @@ public class PropertyRendererBase extends LayoutGroupListItemRenderer
     override protected function initialize():void
     {
         super.initialize();
+
+        var skin:Image = new Image(AppRoot.assets.getTexture("item_background"));
+        skin.scale9Grid = new Rectangle(12, 12, 16, 16);
+        backgroundSkin = skin;
 
         var hLayout:HorizontalLayout = new HorizontalLayout();
         hLayout.verticalAlign = VerticalAlign.MIDDLE;

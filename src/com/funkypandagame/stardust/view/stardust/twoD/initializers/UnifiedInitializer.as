@@ -28,7 +28,10 @@ import idv.cjcat.stardustextended.math.UniformRandom;
 
 import flash.events.EventDispatcher;
 
+import starling.display.Quad;
+
 import starling.events.Event;
+import starling.utils.Color;
 
 public class UnifiedInitializer extends LayoutGroup
 {
@@ -53,6 +56,8 @@ public class UnifiedInitializer extends LayoutGroup
         var v:VerticalLayout = new VerticalLayout();
         v.gap = 2; v.paddingLeft = 2; v.paddingRight = 2;
         layout = v;
+        var skin:Quad = new Quad(50,50,Color.TEAL);
+        backgroundSkin = skin;
     }
 
     override protected function initialize():void
